@@ -1,0 +1,101 @@
+//
+//  Siqiquan.pch
+//  Siqiquan
+//
+//  Created by xiaohao liu on 16/11/16.
+//  Copyright © 2016年 xiaohao liu. All rights reserved.
+//
+
+
+
+#import "UIView+Frame.h"
+#import "UIBarButtonItem+Item.h"
+#import "UIImageView+Download.h"
+#import "SQConst.h"
+#import "UIImage+Image.h"
+#import "UIView+WKFFrame.h"
+#import "XIYI_MBProgressHUD.h"
+
+//登录返回的秘钥token
+#define Token               @"token"
+
+#define GetDefaults(key)             [[NSUserDefaults standardUserDefaults] objectForKey:key]
+#define SetDefaults(key,value)       [[NSUserDefaults standardUserDefaults] setObject:value forKey:key]
+#define USERDEFAULTE                 [NSUserDefaults standardUserDefaults]
+#define ISLOGINSTATUS                [GetDefaults(ISLOGIN) boolValue]
+
+
+#define kWeiXinAppId               @"wxc4f03a025256584a"
+#define kWeiXinAppSecret           @"fc9eb7668e235fb33b05808772d97c41"
+
+static NSString *kAuthScope = @"snsapi_message,snsapi_userinfo,snsapi_friend,snsapi_contact";
+static NSString *kAuthOpenID = @"0c806938e2413ce73eef92cc3";
+
+static NSString *kAuthState = @"xxx";
+
+
+
+// #filename -> "filename
+// @#filename -> @"filename"
+#define XMGAFNWriteToPlist(filename) [responseObject writeToFile:[NSString stringWithFormat:@"/Users/xiaomage/Desktop/%@.plist", @#filename] atomically:YES];
+
+#define XMGColor(r,g,b) [UIColor colorWithRed:(r) / 256.0 green:(g) / 256.0 blue:(b) / 256.0 alpha:1]
+#define XMGGrayColor(v) XMGColor(v,v,v)
+#define XMGRandomColor XMGColor(arc4random_uniform(255), arc4random_uniform(255), arc4random_uniform(255))
+
+/***********屏幕适配*************/
+#define XMGScreenW [UIScreen mainScreen].bounds.size.width
+#define XMGScreenH [UIScreen mainScreen].bounds.size.height
+#define iphone6P (XMGScreenH == 736)
+#define iphone6 (XMGScreenH == 667)
+#define iphone5 (XMGScreenH == 568)
+#define iphone4 (XMGScreenH == 480)
+/***********屏幕适配*************/
+
+
+
+//height and width
+#define kHeaderViewHeight    200
+#define kMenuViewHeight      44
+#define kNavigationHeight    64
+#define kScrollViewOriginY   (0 + kNavigationHeight - kNavigationHeight)
+#define kScreenHeight        [UIScreen mainScreen].bounds.size.height
+#define kScreenWidth         [UIScreen mainScreen].bounds.size.width
+
+//随机色
+#define RandomColor RGBcolor(arc4random_uniform(256), arc4random_uniform(256), arc4random_uniform(256))
+#define RGBcolor(r,g,b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1]
+#define HEXRGBCOLOR(h) RGBcolor(((h>>16)&0xFF), ((h>>8)&0xFF), (h&0xFF))
+
+
+//宏定义AlertView
+#define SHOW_ALERT(_message_) UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:_message_ delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil]; \
+[alert show];
+
+
+//解决循环引用
+#define weakify(va) \
+autoreleasepool {} \
+__weak __typeof__(va) metamacro_concat(va, _weak_) = (va);
+#define strongify(va) \
+try {} @finally {} \
+_Pragma("clang diagnostic push") \
+_Pragma("clang diagnostic ignored \"-Wshadow\"") \
+__strong __typeof__(va) va = metamacro_concat(va, _weak_);\
+_Pragma("clang diagnostic pop")
+#define metamacro_concat(A, B) A ## B
+
+
+
+
+#define SQFunc SQLog(@"%s",__func__)
+
+#ifdef DEBUG // 调试
+
+#define SQLog(...) NSLog(__VA_ARGS__);
+
+#else // 发布
+
+#define SQLog(...)
+
+#endif
